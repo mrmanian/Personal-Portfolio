@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<!-- Metadata and script sources used -->
+<head>
+    <title>Michael Manian's Portfolio</title>
+    <link rel="stylesheet" href={{ url_for("static", filename="style.css") }} type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    <script src="https://threejs.org/examples/js/libs/stats.min.js" defer></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+    <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}"> 
+    <link rel="apple-touch-icon" href="{{url_for('static', filename='favicon.png')}}">
+    <link rel="icon" sizes="192x192" href="{{url_for('static', filename='favicon.png')}}">
+</head>
+
+<!-- Start of the body -->
+<body data-gr-c-s-loaded="true" data-aos-easing="ease" data-aos-duration="400" data-aos-delay="0">
+<a id="top"></a>
+
+<!-- Loading animation -->
+<div class="loader_bg">
+    <div class="loader"></div>
+</div>
+
+<!-- Header navigation bar -->
+<nav>
+    <a href="." class="header_left">Portfolio</a>
+    <ul class="header_right">
+        <li><a href="#about">About Me</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience"> Work Experience</a></li>
+        <li><a href="#certifications">Extracurriculars</a></li>
+        <li><a href="#organizations">Leadership</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#documents">Documents</a></li>
+    </ul>
+</nav>
+
+<!-- Homepage image carousel -->
+<div id="slides" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#slides" data-slide-to="0" class="active"></li>
+        <li data-target="#slides" data-slide-to="1"></li>
+        <li data-target="#slides" data-slide-to="2"></li>
+        <li data-target="#slides" data-slide-to="3"></li>
+    </ol>
+
+    <div class="carousel-inner">
+        <div class="carousel-item active img-fluid">
+            <img class="d-block h-25 mw-100 first" src="{{url_for('static', filename='header_background.jpg')}}" alt="Background">
+        </div>
+        <div class="carousel-item img-fluid">
+            <img class="d-block h-25 mw-100" src="{{url_for('static', filename='quote1.jpg')}}" alt="Quote1">
+        </div>
+        <div class="carousel-item img-fluid">
+            <img class="d-block h-25 mw-100" src="{{url_for('static', filename='quote2.jpg')}}" alt="Quote2">
+        </div>
+        <div class="carousel-item img-fluid">
+            <img class="d-block h-25 mw-100" src="{{url_for('static', filename='quote3.jpg')}}" alt="Quote3">
+        </div>
+    </div>
+
+    <a class="carousel-control-prev" data-target="#slides" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </a>
+    <a class="carousel-control-next" data-target="#slides" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </a>
+</div>
+
+<!-- Particle animation background -->
+<div id="particle-container" class="particles-js"></div>
+
+<!-- Arrow under carousel to scroll down to first section -->
+<div class="arrow container">
+    <a href="#about"><li><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAABbklEQVRoge2WsUoDQRCG/zmTRsucQlJp4RVC1Mo+vdgIQTQatTQvMQ8hVhJQE0mdF0h8C9FewXsCQbM2l3iGi2b2dhuZr11m9vv5b+EARVEURVEURVEURbGCbIaYOQjXo+vA4OGicXiTR+Cy2z0g0G5cKZ9yrfYhnQ+kA8wchFHUJuDMENpXnfumdMeYRL4D4Gjl5fWOB4OCdIeogYm8QVp6RAbn0iZS8gspmd5bpXwsaULcQNYOaRNZ8mM24thILhe/gRktAHM2MUuegF5YLDTq9fqnxMf+EVuEcC2fzNohDeFDPpm3Z94QvuSTHfn4K8SIzLsveUwvtWE4HJqdarW/VCqtAdhKHREIewTaz7jnNn5+Omm1WqO89+cOACQhNqv9xbC0SsB26ogw1TIBveVioelCHnAUAPhuIiPEBFefTRpnAYDfQ/iQBxwHALJD+JIHPAQAfoYIgEdf8t5h5oCZXfxvKYqiKIqiKP+RL++Tr+EgYEpCAAAAAElFTkSuQmCC" alt="Arrow"></li></a>
+    <br><br><br>
+</div>
+
+<!-- Container for each individual bootstrap card -->
+<div class="wrapper">
+	<div class="container">
+
+<!-- About me bootstrap card -->
+        <section id="about">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card card-body h-100 shadow-lg bg-white rounded aos-init aos-animate" data-aos="fade-down" data-aos-offset="10">
+                        <h2>About Me</h2>
+                        <hr>
+                        <h6 style="padding-left: 0">Hi there and welcome to my personal website! Let me start off by explaining a little bit about my self. My name is Michael Manian but I go by Mike for short. 
+                            I am a hardworking senior at New Jersey Institute of Technology in the midst of pursuing a Bachelor of Science degree in Computing and Business. 
+                            This degree has given me knowledge in Computer Science and Business Management, both of which I am very passionate about. 
+                            Outside of academics, some of my predominant hobbies include working out, listening to music, watching football, and investing in stocks/forex. <br><br>
+                            Through classes and working on projects, I have gained experience in web development using technologies such as Flask, React.js, Javascript, Socket.io, and HTML/CSS. 
+                            I have also gained experience in data science and machine learning using various Python libraries, SQL, and statistics. 
+                            I completed a 9 course IBM data science specialization course as well as various virtual programs to showcase and enhance my technical skills. <br><br>
+                            This website was created as a small side project to showcase all my accomplishments, including those that are not listed on my resume. 
+                            I seek to leverage my skills while expanding my knowledge and am actively looking for full-time employment or research opportunities that will help me do so.
+                            Feel free to connect with me on Linkedin, check out my projects on Github, and/or email me! I have also attached below the latest copy of my resume for your viewing.</h6>
+                        <br>
+                        <ul>
+                            <a href="https://www.linkedin.com/in/michael-manian/" data-toggle="tooltip" data-placement="top" title="Follow me on Linkedin!" target="_blank" rel="noopener noreferrer"><li><img class="end" src="https://img.icons8.com/color/96/000000/linkedin.png" alt="Linkedin"></li></a>
+                            <a href="https://github.com/mrmanian" data-toggle="tooltip" data-placement="top" title="Check out my projects!" target="_blank" rel="noopener noreferrer"><li><img class="end" src="https://img.icons8.com/cute-clipart/96/000000/github.png" alt="GitHub"></li></a>
+                            <a href="mailto:michaelrmanian@gmail.com" data-toggle="tooltip" data-placement="top" title="Send me an email!"><li><img class="end" src="https://img.icons8.com/color/96/000000/gmail.png" alt="Gmail"></li></a>
+                            <a href="{{url_for('static', filename='Resume.pdf')}}" class="btn btn-warning" style="float: right" target="_blank" rel="noopener noreferrer">Download<br>Resume</a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br><br><br><br>
+        </section>
+
+<!-- Education bootstrap card -->
+        <section id="education">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card card-body h-100 shadow-lg bg-white rounded aos-init aos-animate" data-aos="fade-up-right" data-aos-offset="10">
+                        <h2>Education</h2>
+                        <hr>
+
+                        <h3 class="top">New Jersey Institute of Technology<span class="right">Sept 2017 - Present</span></h3>
+                        <h4>Bachelor of Science, Computing and Business<span class="right">Newark, NJ</span></h4>
+                        <h6>• GPA: 3.695</h6>
+                        <h6>• Expected graduation: May 2021.</h6>
+                        <h6>• Relevant coursework: Advanced Data Structures and Algorithm Design,</h6>
+                        <h6 style="text-indent: 10.9em">Business Data Analytics,</h6>
+                        <h6 style="text-indent: 10.9em">Business Operations Management & Analytics,</h6>
+                        <h6 style="text-indent: 10.9em">Database System Design & Management,</h6>
+                        <h6 style="text-indent: 10.9em">Fundamentals Of Corporate Finance,</h6>
+                        <h6 style="text-indent: 10.9em">Fundamentals of Network Security,</h6>
+                        <h6 style="text-indent: 10.9em">Guided Design in Software Engineering,</h6>
+                        <h6 style="text-indent: 10.9em">Intensive Programming in Linux,</h6>
+                        <h6 style="text-indent: 10.9em">Principles of Operating Systems,</h6>
+                        <h6 style="text-indent: 10.9em">Probability and Statistics.</h6>
+                    </div>
+                </div>
+            </div>
+            <br><br><br><br>
+        </section>
+
+<!-- Projects bootstrap card -->
+        <section id="projects">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card card-body h-100 shadow-lg bg-white rounded aos-init aos-animate" data-aos="fade-up-left" data-aos-offset="10">
+                        <h2>Projects</h2>
+                        <hr>
+
+                        <h3 class="top">CakeWalk<span class="right">Nov 2020 - Dec 2020</span></h3>
+                        <h4 style="margin-bottom: 0 !important">Technologies Used: Flask, React.js, Javascript, Socket.IO, CSS3, PostgreSQL, OAuth</h4>
+                        <a href="https://github.com/mrmanian/CakeWalk" class="git space" target="_blank" rel="noopener noreferrer">https://github.com/mrmanian/CakeWalk</a>
+                        <a href="https://cakewalk.herokuapp.com/" class="git atop space" target="_blank" rel="noopener noreferrer">https://cakewalk.herokuapp.com/</a>
+                        <h6>• Worked on a project as a team of 4 by using version control and agile to collaborate with engineers from Facebook and Uber to create and implement a project management dashboard web app where users login using Facebook OAuth or Google OAuth and can view, complete, set deadlines, and assign projects or tasks with one another.</h6>
+                        <h6>• Implemented full stack development which included 92% code coverage, unit testing, continuous integration, daily meetings and standups with an industry mentor, creation of a tech spec with accompanying wireframes, and deployment to Heroku. Designed using Flask, React.js, HTML5, CSS3, Socket.IO, and PostgreSQL.</h6>
+                        <h6>• Performed part-time project manager roles/responsibilities which included guiding, planning, communicating with my team such that all tasks are completed in a timely manner and everything functioned properly.</h6>
+                        
+                        <h3>Pirate Chat<span class="right">Nov 2020</span></h3>
+                        <h4 style="margin-bottom: 0 !important">Technologies Used: Flask, React.js, Socket.IO, CSS3, PostgreSQL, OAuth</h4>
+                        <a href="https://github.com/mrmanian/Pirate-Chat" class="git space" target="_blank" rel="noopener noreferrer">https://github.com/mrmanian/Pirate-Chat</a>
+                        <a href="https://mrmchat.herokuapp.com/" class="git atop space" target="_blank" rel="noopener noreferrer">https://mrmchat.herokuapp.com/</a>
+                        <h6>• Made a pirate-themed chat app using Flask, React.js, Socket.IO, CSS3, Giphy API, Google OAuth, and Facebook OAuth where authorized users can interact with one another or interact with a bot. Chat history is persisted using a Postgres Database. Unit tested and mocked all functions created to get 90+% code coverage. Used GitHub for source control and deployed to Heroku.</h6>
+                        
+                        <h3>Recipe Generator<span class="right">Oct 2020</span></h3>
+                        <h4 style="margin-bottom: 0 !important">Technologies Used: Flask, HTML5, CSS3, Bootstrap 4</h4>
+                        <a href="https://github.com/mrmanian/Recipe-Generator" class="git space" target="_blank" rel="noopener noreferrer">https://github.com/mrmanian/Recipe-Generator</a>
+                        <a href="https://mrmrecipes.herokuapp.com/" class="git atop space" target="_blank" rel="noopener noreferrer">https://mrmrecipes.herokuapp.com/</a>
+                        <h6>• Created a web app that pulls data from Twitter API and Spoonacular API and generates random dessert recipes along with related tweets on refresh. Implemented a search feature so users can search for custom recipes. Designed using Flask, HTML5, CSS3, Bootstrap 4, and jQuery. Used GitHub for source control and deployed using Heroku.</h6>
+                        
+                        
+                        <h3>IBM Data Science Capstone<span class="right">Aug 2020 - Sept 2020</span></h3>
+                        <h4 style="margin-bottom: 0 !important">Technologies Used: Jupyter Notebook, Python, SQL, Foursquare API</h4>
+                        <a href="https://github.com/mrmanian/IBM-Data-Science-Capstone" class="git space" target="_blank" rel="noopener noreferrer">https://github.com/mrmanian/IBM-Data-Science-Capstone</a>
+                        <h6>• Built a machine learning model in Jupyter Notebook using various Python libraries, SQL, statistical k-means clustering, and Foursquare API to solve a real-world hospital shortage problem during a pandemic in New Jersey.</h6>
+                        <h6>• Determined various locations based on population, income, and the number of towns and hospitals per county, where building an additional hospital would help combat this shortage problem.</h6>
+                        <h6>• Gathered and wrangled various datasets to determine the correlation and regression between each numerical variable to come up with this conclusion.</h6>
+
+                        <h3>Personal Portfolio<span class="right">May 2020 – Jul 2020</span></h3>
+                        <h4 style="margin-bottom: 0 !important">Technologies Used: Flask, HTML5, CSS3, Bootstrap 4</h4>
+                        <a href="https://github.com/mrmanian/Personal-Website" class="git space" target="_blank" rel="noopener noreferrer">https://github.com/mrmanian/Personal-Website</a>
+                        <h6>• Designed this fully responsive website from scratch using Flask as the web framework and by implementing HTML5, CSS3, Bootstrap 4, and jQuery for styling and designing the page contents. Successfully tested for cross-browser compatibility and mobile device compatibility.</h6>
+                        
+                        <h3>Directory Traverser<span class="right">May 2020</span></h3>
+                        <h4 style="margin-bottom: 0 !important">Technologies Used: C</h4>
+                        <a href="https://github.com/mrmanian/Traverse-Directory" class="git space" target="_blank" rel="noopener noreferrer">https://github.com/mrmanian/Traverse-Directory</a>
+                        <h6>• Coded one recursive program and one non-recursive program that traverses a user given directory and sorts all the files, including those inside any subdirectories, in ascending order based on size.</h6>
+                        
+                        <h3>Web Scrapper<span class="right">March 2020</span></h3>
+                        <h4 style="margin-bottom: 0 !important">Technologies Used: Python, Bash Scripting</h4>
+                        <a href="https://github.com/mrmanian/Web-Scrapper" class="git space" target="_blank" rel="noopener noreferrer">https://github.com/mrmanian/Web-Scrapper</a>
+                        <h6>• Coded two programs, one in Python and one using Bash scripting, that scraps a list of Wikipedia pages and gets the 15 most frequently used words and the number of occurrences and then sorts them in descending order based on the count.</h6>
+                    </div>
+                </div>
+            </div>
+            <br><br><br><br>
+        </section>
+
+<!-- Experience bootstrap card -->
+        <section id="experience">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card card-body h-100 shadow-lg bg-white rounded aos-init aos-animate" data-aos="fade-up-left" data-aos-offset="10">
+                        <h2>Work Experience</h2>
+                        <hr>
+
+                        <h3 class="top">Kohl's<span class="right">Sept 2019 - Jan 2020</span></h3>
+                        <h4>OMNI Fulfillment<span class="right">Clifton, NJ</span></h4>
+                        <h6>• Picked and packed 30 products every hour for customer orders during a busy holiday season by resourcefully scouring the store and attentively looking for the correct products.</h6>
+                        <h6>• Simultaneously assisted coworkers and customers to ensure the store is operating efficiently by managing workflow and communicating with employees and customers in need of help.</h6>
+
+                        <h3>St. Joseph's Hospital<span class="right">June 2018 - Aug 2018</span></h3>
+                        <h4>IT Consultant<span class="right">Paterson, NJ</span></h4>
+                        <h6>• Reduced excess time spent on inventory and increased productivity by 50% by reorganizing physical storage of supplies.</h6>
+                        <h6>• Steered the company through a critical transition into a new software system by efficiently installing and configuring over 200 Cerner Connectivity Engines and Device Adapters into patient rooms, resulting in faster data transfers and ease of use.</h6>
+                        <h6>• Troubleshot 15 support tickets in 2 weeks by providing technical support after the new software system went live.</h6>
+                    </div>
+                </div>
+            </div>
+            <br><br><br><br>
+        </section>
+
+<!-- Extracurriculars bootstrap card -->
+        <section id="certifications">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card card-body h-100 shadow-lg bg-white rounded aos-init aos-animate" data-aos="fade-up-right" data-aos-offset="10">
+                        <h2>Extracurriculars</h2>
+                        <hr>
+
+                        <h3 class="top space">IBM Data Science Specialization<span class="right">June 2020 - July 2020</span></h3>
+                        <h6>• 9 course specialization covering methodology, machine learning, data visualization, and data analysis using IBM Watson, SQL, API’s, and various Python libraries such as Pandas, Matplotlib, Sklearn, and Numpy.</h6>
+
+                        <h3 class="space">Quantium Data Analytics Program<span class="right">July 2020</span></h3>
+                        <h6>• Analyzed and wrangled customer transaction/behavior datasets using Python and statistics to generate insights and provide commercial recommendations. Prepared a final report for the manager using the Pyramid Principal model.</h6>
+
+                        <h3 class="space">JP Morgan Chase Software Engineering Program<span class="right">May 2020</span></h3>
+                        <h6>• Devised a financial analysis stock model by debugging scripts given by JPMorgan through using Python, React, Perspective, and Git, allowing traders to determine when a trading opportunity may arise based on price movement.</h6>
+                    </div>
+                </div>
+            </div>
+            <br><br><br><br>
+        </section>
+
+<!-- Leadership bootstrap card -->
+        <section id="organizations">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card card-body h-100 shadow-lg bg-white rounded aos-init aos-animate" data-aos="fade-up-right" data-aos-offset="10">
+                        <h2>Leadership</h2>
+                        <hr>
+
+                        <h3 class="top">Iota Nu Delta Fraternity Inc.<span class="right">Sept 2018 - Sept 2020</span></h3>
+                        <h4>Vice President and Philanthropy Chair<span class="right">Newark, NJ</span></h4>
+                        <h6>• Managed relations with the National Board and maintained an internal and external operating structure within the chapter which resulted in a 50% increase in recruitment numbers and an 80% increase in social activities.</h6>
+                        <h6>• Organized and led over 15 philanthropy events over a span of two years through constant collaboration, communication, and leadership which resulted in raising over $1500 to donate to local charities and organizations.</h6>
+                    </div>
+                </div>
+            </div>
+            <br><br><br><br>
+        </section>
+
+<!-- Skills bootstrap card -->
+        <section id="skills">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card card-body h-100 shadow-lg bg-white rounded aos-init aos-animate" data-aos="fade-up-left" data-aos-offset="10">
+                        <h2>Skills</h2>
+                        <hr>
+
+                        <h3 class="top" style="text-align: center; text-decoration: underline">Languages and Tools</h3>
+                        <div class="row">
+                            <div class="devicon devicon-python-plain colored"><span>Python</span></div>
+                            <div class="devicon devicon-pycharm-plain colored"><span>PyCharm</span></div>
+                            <div class="devicon devicon-amazonwebservices-original colored"><span>AWS</span></div>
+                            <div class="devicon devicon-git-plain colored"><span>Git</span></div>
+                            <div class="devicon"><img src="https://img.icons8.com/officel/80/000000/data-configuration.png" class="icons" alt="SQL"><span style="margin-top: -30px; color: mediumpurple">SQL</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="devicon devicon-c-plain colored"><span>C</span></div>
+                            <div class="devicon devicon-css3-plain colored"><span>CSS3</span></div>
+                            <div class="devicon devicon-html5-plain colored"><span>HTML5</span></div>
+                            <div class="devicon devicon-heroku-original colored"><span>Heroku</span></div>
+					        <div class="devicon devicon-react-original colored"><span>React.js</span></div>
+                        </div>
+
+                        <h3 style="text-align: center; text-decoration: underline">Soft Skills</h3>
+                        <h4 class="skills_details">Leadership and Collaboration</h4>
+                        <h6>• Demonstrated through my E-board positions in Iota Nu Delta Fraternity and through ongoing group projects in college.</h6>
+                        <h4 class="skills_details">Time Management</h4>
+                        <h6>• Constantly managing work-school-life balance / always spending my time being productive.</h6>
+                        <h4 class="skills_details">Communication</h4>
+                        <h6>• Constant interaction and networking with others through jobs, projects, organizations, and social life.</h6>
+                        <h4 class="skills_details">Problem-Solving and Hardworking</h4>
+                        <h6>• Shown through my individual and team projects. I give every task my 100%.</h6>
+                        <h4 class="skills_details">Creative</h4>
+                        <h6>• Praised for my web designing skills / I know how to make a page look good.</h6>
+                    </div>
+                </div>
+            </div>
+            <br><br><br><br>
+        </section>
+
+<!-- Documents bootstrap card -->
+        <section id="documents">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card card-body h-100 shadow-lg bg-white rounded aos-init aos-animate" data-aos="fade-up" data-aos-offset="10">
+                        <h2>Documents</h2>
+                        <hr>
+
+                        <ul class="docs">
+                            <embed src="{{url_for('static', filename='ibm.pdf')}}" style="padding-bottom: 14px; padding-right: 7px"/>
+                            <embed src="{{url_for('static', filename='quantium.pdf')}}" style="padding-bottom: 14px"/>
+                            <embed src="{{url_for('static', filename='jpmc.pdf')}}" style="padding-right: 7px"/>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+        </section>
+    </div>
+</div>
+
+<!-- Social links at the bottom -->
+<ul class="bottom_social">
+    <a href="https://www.linkedin.com/in/michael-manian/" data-toggle="tooltip" data-placement="top" title="Follow me on Linkedin!" target="_blank" rel="noopener noreferrer"><li><img class="end" src="https://img.icons8.com/color/96/000000/linkedin.png" alt="Linkedin"></li></a>
+    <a href="https://github.com/mrmanian" data-toggle="tooltip" data-placement="top" title="Check out my projects!" target="_blank" rel="noopener noreferrer"><li><img class="end" src="https://img.icons8.com/cute-clipart/96/000000/github.png" alt="GitHub"></li></a>
+    <a href="mailto:michaelrmanian@gmail.com" data-toggle="tooltip" data-placement="top" title="Send me an email!"><li><img class="end" src="https://img.icons8.com/color/96/000000/gmail.png" alt="Gmail"></li></a>
+</ul>
+
+<!-- Footer -->
+<footer class="footer container">
+    <h6 class="copyright">
+        <br>
+        Created using Flask, HTML5, CSS3, Bootstrap 4, and JQuery. Hosted by Heroku.
+        <br>
+        Copyright &copy; 2020, Michael Manian. All rights reserved.
+        <br>
+    </h6>
+</footer>
+
+<!-- JQuery code for loading animation -->
+<script>
+    setTimeout(function() {
+        $('.loader_bg').fadeToggle();
+    }, 2000);
+</script>
+
+<!-- JQuery code for dropdown menu -->
+<script>
+    $(function() {
+        $("<select/>").appendTo("nav");
+        $("<option/>", {
+            "text": "Menu",
+            "value": "#top"
+        }).appendTo("nav select");
+
+        $("nav ul a").each(function() {
+            const el = $(this);
+            $("<option/>", {
+                "value": el.attr("href"),
+                "text": el.text()
+            }).appendTo("nav select");
+        });
+
+        $(document).ready(function(){
+            $('nav select').change(function(event) {
+                event.preventDefault();
+                const target = $(this).val();
+                const $target = $(target);
+
+                $('html, body').animate({
+                    scrollTop: $target.offset().top}, 2000, function() {
+                    window.location.hash = target;
+                });
+            });
+        });
+    });
+</script>
+
+<!-- JQuery code for highlighting active section on header -->
+<script>
+    $(window).scroll(function() {
+        const scroll = $(window).scrollTop();
+        if (scroll >= 100) {
+            $('nav').addClass('fixed');
+            $('.wrapper section').each(function(i) {
+                if ($(this).position().top <= scroll + 157) {
+                    $('nav ul a.active').removeClass('active');
+                    $('nav ul a').eq(i).addClass('active');
+                }
+            });
+        }
+        else {
+            $('nav').removeClass('fixed');
+            $('nav ul a.active').removeClass('active');
+            $('nav ul a:first').addClass('active');
+        }
+    }).scroll();
+</script>
+
+<!-- JQuery code for scroll animation -->
+<script>
+    $(document).ready(function() {
+        $("a").on('click', function(event) {
+            if (this.hash !== "") {
+                event.preventDefault();
+                const hash = this.hash;
+
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top}, 2000, function() {
+                        window.location.hash = hash;
+                });
+            }
+        });
+    });
+</script>
+
+<!-- JQuery code for changing header color after scrolling -->
+<script>
+    $(window).scroll(function() {
+        let vh = $(window).height() - (window.innerHeight / 6);
+        $('nav').toggleClass('scrolled', $(this).scrollTop() > vh);
+        if ($(this).scrollTop() > vh) {
+            $('nav a').css({"color": "white"});
+            $('nav a.active').css({"color": "orange"});
+        }
+        else if ($(this).scrollTop() < vh) {
+            $('nav a.active').css({"color": "white"})
+        }
+    });
+</script>
+
+<!-- Initialize AOS animation script -->
+<script>
+    AOS.init();
+</script>
+
+<!-- JQuery code for particle animation -->
+<script>
+    $(document).ready(function($) {
+        $(".particles-js").each(function() {
+        particlesJS($(this).attr('id'), {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 1000
+                    }
+                },
+                "color": {
+                    "value": "#7d997b"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    },
+                    "image": {
+                        "src": "img/github.svg",
+                        "width": 100,
+                        "height": 100
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#7d997b",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+        });
+    });
+</script>
+
+<!-- JQuery code for setting particle animation height based on screen size -->
+<script>
+    function sideHeight() {
+        let wH = $(document).height() - $(window).height();
+
+        $('#particle-container').css({
+          height: wH
+        });
+        }
+sideHeight();
+</script>
+
+<!-- JQuery code for popper tooltip -->
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip({ trigger: "hover" });
+    });
+</script>
+
+</body>
+</html>
